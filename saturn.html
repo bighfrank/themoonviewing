@@ -12,7 +12,7 @@
       font-family: "Courier New", Courier, monospace;
     }
 
-    /* the pixel art fills the whole screen */
+    
     #art {
       position: fixed;
       inset: 0;
@@ -22,7 +22,7 @@
       image-rendering: pixelated;
     }
 
-    /* the one white box in the corner that holds all the text */
+  
     #box {
       position: fixed;
       top: 1rem;
@@ -61,11 +61,12 @@
   <div id="box">
     <a href="index.html">back to the moonviewing</a>
 
-    <!-- ============ YOUR TEXT GOES HERE ============
-         Replace the line below with whatever you want to say.
-         You can add more paragraphs by copying the <p>...</p> line. -->
-    <p>write your text here</p>
-    <!-- ============ END OF YOUR TEXT ============ -->
+    
+    <p>saturn.wav</p>
+    <p>in spite of his father, he had overthrown him</p>
+    <p>like man, saturn was paranoid</p>
+    <p>so why must he slaughter his kin?</p>
+  
 
     <button id="music-btn" hidden>play music</button>
   </div>
@@ -79,7 +80,6 @@
   <!-- ============ END OF YOUR MUSIC ============ -->
 
   <script>
-    // ---- Draw a grayscale sketch on a small hidden canvas, then reduce it to 1-bit ----
     (function () {
       var H = 96;
       var src = document.createElement('canvas');
