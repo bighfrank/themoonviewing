@@ -75,6 +75,37 @@
   <audio id="music" src="saturn.mp3" loop></audio>
 
   <script>
+    // ---- Music: starts if a file is set above; the button lets you play or pause ----
+    (function () {
+      var audio = document.getElementById('music');
+      var btn = document.getElementById('music-btn');
+      if (!audio.getAttribute('src')) return;
+      btn.hidden = false;
+
+      function update() { btn.textContent = audio.paused ? 'play music' : 'pause music'; }
+      audio.addEventListener('play', update);
+      audio.addEventListener('pause', update);
+      btn.addEventListener('click', function () {
+        if (audio.paused) { audio.play().catch(function () {}); } else { audio.pause(); }
+      });
+
+      // browsers often block autoplay, so also start on the first click or key press
+      var attempt = audio.play();
+      if (attempt && attempt.catch) {
+        attempt.catch(function () {
+          function start(e) {
+            if (e.target.closest && e.target.closest('#music-btn')) return;
+            audio.play().catch(function () {});
+          }
+          document.addEventListener('pointerdown', start, { once: true });
+          document.addEventListener('keydown', start, { once: true });
+        });
+      }
+      update();
+    })();
+  <script> 
+    
+  <script>
     (function () {
       var H = 96;
       var src = document.createElement('canvas');
@@ -172,35 +203,6 @@
       window.addEventListener('resize', function () {
         clearTimeout(timer); timer = setTimeout(draw, 150);
       });
-    })();
-
-    // ---- Music: starts if a file is set above; the button lets you play or pause ----
-    (function () {
-      var audio = document.getElementById('music');
-      var btn = document.getElementById('music-btn');
-      if (!audio.getAttribute('src')) return;
-      btn.hidden = false;
-
-      function update() { btn.textContent = audio.paused ? 'play music' : 'pause music'; }
-      audio.addEventListener('play', update);
-      audio.addEventListener('pause', update);
-      btn.addEventListener('click', function () {
-        if (audio.paused) { audio.play().catch(function () {}); } else { audio.pause(); }
-      });
-
-      // browsers often block autoplay, so also start on the first click or key press
-      var attempt = audio.play();
-      if (attempt && attempt.catch) {
-        attempt.catch(function () {
-          function start(e) {
-            if (e.target.closest && e.target.closest('#music-btn')) return;
-            audio.play().catch(function () {});
-          }
-          document.addEventListener('pointerdown', start, { once: true });
-          document.addEventListener('keydown', start, { once: true });
-        });
-      }
-      update();
     })();
   </script>
 </body>
