@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>the moonviewing</title>
+  <style>
+    :root {
+      --night: #14172b;
+      --moon: #f1e6c8;
+      --haze: #a9a58f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--night);
+      color: var(--moon);
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    main {
+      max-width: 44rem;
+      padding: 12vh 1.5rem 4rem;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+    }
+
+    p {
+      margin: 1.5rem 0 0;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--haze);
+    }
+
+    a { color: var(--haze); }
+    a:hover, a:focus-visible { color: var(--moon); }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.25rem 0.6rem;
+      font: inherit;
+      color: var(--haze);
+      background: transparent;
+      border: 1px solid var(--haze);
+      border-radius: 0;
+      cursor: pointer;
+    }
+
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- ============ YOUR TEXT GOES HERE ============
+         Edit the words between the tags. Add more lines by copying a <p>...</p> line. -->
+    <h1>to admire the beauty of the autumn full moon and to give thanks for the harvest</h1>
+    <p>the moonviewing</p>
+    <p><a href="saturn.html">saturn</a></p>
+    <!-- ============ END OF YOUR TEXT ============ -->
+
+    <button id="music-btn" hidden>play music</button>
+  </main>
+
+  <!-- ============ YOUR MUSIC GOES HERE ============
+       1. Upload your song to your GitHub repository (for example: music.mp3)
+       2. Type its exact file name between the quotes after src=
+       Example: src="music.mp3"
+       Leave it empty (src="") for no music. -->
+  <audio id="music" src="" loop></audio>
+  <!-- ============ END OF YOUR MUSIC ============ -->
+
+  <script>
+    // Music: starts if a file is set above; the button lets you play or pause.
+    (function () {
+      var audio = document.getElementById('music');
+      var btn = document.getElementById('music-btn');
+      if (!audio.getAttribute('src')) return;
+      btn.hidden = false;
+
+      function update() { btn.textContent = audio.paused ? 'play music' : 'pause music'; }
+      audio.addEventListener('play', update);
+      audio.addEventListener('pause', update);
+      btn.addEventListener('click', function () {
+        if (audio.paused) { audio.play().catch(function () {}); } else { audio.pause(); }
+      });
+
+      // browsers often block autoplay, so also start on the first click or key press
+      var attempt = audio.play();
+      if (attempt && attempt.catch) {
+        attempt.catch(function () {
+          function start(e) {
+            if (e.target.closest && e.target.closest('#music-btn')) return;
+            audio.play().catch(function () {});
+          }
+          document.addEventListener('pointerdown', start, { once: true });
+          document.addEventListener('keydown', start, { once: true });
+        });
+      }
+      update();
+    })();
+  </script>
+</body>
+</html>
